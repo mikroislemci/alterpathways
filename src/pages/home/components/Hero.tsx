@@ -1,0 +1,115 @@
+interface HeroProps {
+  simulation: string;
+  setSimulation: (value: string) => void;
+  onSimulate: () => void;
+  isLoading: boolean;
+}
+
+export default function Hero({ simulation, setSimulation, onSimulate, isLoading }: HeroProps) {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Simulate button clicked!');
+    onSimulate();
+  };
+
+  return (
+    <section className="relative min-h-screen flex items-center justify-center px-6 py-20 z-10">
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="relative max-w-4xl mx-auto text-center z-20">
+        {/* Logo/Icon */}
+        <div className="mb-8 inline-block">
+          <div className="w-20 h-20 flex items-center justify-center backdrop-blur-lg bg-white/5 rounded-full border border-white/10">
+            <i className="ri-git-branch-line text-4xl text-violet-300"></i>
+          </div>
+        </div>
+
+        {/* Main Heading */}
+        <h1 className="text-5xl md:text-7xl font-light text-white mb-6 leading-tight">
+          What if you had chosen
+          <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 via-purple-300 to-pink-300">
+            differently?
+          </span>
+        </h1>
+
+        {/* Subheading */}
+        <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+          Simulate the life you didn't live. See how one decision could have changed everything.
+        </p>
+
+        {/* Search Bar */}
+        <div className="relative max-w-3xl mx-auto z-20">
+          <form onSubmit={handleSubmit}>
+            <div className="relative backdrop-blur-xl bg-white/5 rounded-full border border-white/10 p-2 hover:border-violet-400/30 transition-all duration-300 z-20">
+              <div className="flex items-center space-x-3">
+                {/* Icon */}
+                <div className="pl-4 flex items-center justify-center">
+                  <i className="ri-search-line text-xl text-gray-400"></i>
+                </div>
+
+                {/* Input */}
+                <input
+                  type="text"
+                  value={simulation}
+                  onChange={(e) => setSimulation(e.target.value)}
+                  placeholder="What if I had taken that job offer in another city..."
+                  className="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-base py-3 pr-4"
+                  disabled={isLoading}
+                />
+
+                {/* Simulate Button */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  onClick={handleSubmit}
+                  className="backdrop-blur-lg bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 whitespace-nowrap z-30 cursor-pointer"
+                  style={{ pointerEvents: 'auto' }}
+                >
+                  {isLoading ? (
+                    <>
+                      <i className="ri-loader-4-line animate-spin"></i>
+                      <span>Simulating...</span>
+                    </>
+                  ) : (
+                    <>
+                      <i className="ri-play-circle-line text-xl"></i>
+                      <span>Simulate</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        {/* Example Prompts */}
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          {[
+            'What if I had studied abroad?',
+            'What if I had started that business?',
+            'What if I had stayed in my hometown?'
+          ].map((prompt, index) => (
+            <button
+              key={index}
+              onClick={() => setSimulation(prompt)}
+              className="backdrop-blur-lg bg-white/5 hover:bg-white/10 text-gray-300 text-sm px-4 py-2 rounded-full border border-white/10 hover:border-violet-400/30 transition-all duration-300 cursor-pointer"
+            >
+              {prompt}
+            </button>
+          ))}
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="mt-20 animate-bounce">
+          <i className="ri-arrow-down-line text-2xl text-gray-500"></i>
+        </div>
+      </div>
+    </section>
+  );
+}
