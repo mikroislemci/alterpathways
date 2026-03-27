@@ -31,6 +31,17 @@ Users describe a missed decision, a path not taken, or a major turning point. Al
 - Supabase
 - OpenAI API
 
+  ## Screenshots
+
+### Hero Section
+![AlterPathways Hero](images/hero.png)
+
+### Simulation Results
+![AlterPathways Results](images/result.png)
+
+### Pricing Section
+![AlterPathways Pricing](images/result1.png)
+
 ## Project Structure
 
 ```bash
