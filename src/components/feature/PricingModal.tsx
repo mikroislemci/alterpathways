@@ -101,32 +101,32 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-gradient-to-b from-[#1A1A2E] to-[#16213E] rounded-3xl border border-white/10 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/70 backdrop-blur-sm">
+      <div className="relative w-full max-w-5xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto bg-gradient-to-b from-[#1A1A2E] to-[#16213E] rounded-t-3xl sm:rounded-3xl border border-white/10 shadow-2xl">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all cursor-pointer text-white z-10"
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all cursor-pointer text-white z-10"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Header */}
-        <div className="text-center pt-12 pb-8 px-6">
-          <h2 className="text-3xl md:text-4xl font-light text-white mb-3">
+        <div className="text-center pt-8 sm:pt-12 pb-6 sm:pb-8 px-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-white mb-3">
             Unlock Your <span className="text-violet-300">Alternate Lives</span>
           </h2>
           <p className="text-gray-400 text-sm">Choose the plan that fits your journey</p>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 pb-8 sm:pb-12">
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative backdrop-blur-xl rounded-3xl p-8 border transition-all duration-300 ${
+              className={`relative backdrop-blur-xl rounded-3xl p-6 sm:p-8 border transition-all duration-300 ${
                 plan.highlighted
-                  ? 'bg-white/10 border-violet-400/50 shadow-2xl shadow-violet-500/20 scale-105'
+                  ? 'bg-white/10 border-violet-400/50 shadow-2xl shadow-violet-500/20 md:scale-105'
                   : 'bg-white/5 border-white/10 hover:bg-white/8'
               }`}
             >

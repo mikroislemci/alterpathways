@@ -39,14 +39,6 @@ export default function Disclaimer() {
           <p className="text-xs text-gray-500">
             © 2025 Pathways. All rights reserved.
           </p>
-          <a 
-            href="https://readdy.ai/?ref=logo" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-block text-xs text-gray-600 hover:text-violet-400 transition-colors cursor-pointer whitespace-nowrap"
-          >
-            Powered by Readdy
-          </a>
         </div>
       </div>
     </section>

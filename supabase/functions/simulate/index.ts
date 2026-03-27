@@ -13,50 +13,90 @@ Deno.serve(async (req) => {
   try {
     console.log('🚀 Simulation request received');
 
-    // Environment variables
     const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY') ?? '';
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY') ?? '';
 
     console.log('🔧 ENV CHECK:', {
       hasUrl: !!supabaseUrl,
       hasServiceKey: !!supabaseServiceKey,
+      hasAnonKey: !!supabaseAnonKey,
       hasOpenAI: !!openaiApiKey,
     });
 
-    // Create Supabase client with SERVICE ROLE KEY to bypass RLS
+    if (!supabaseUrl || !supabaseServiceKey || !supabaseAnonKey || !openaiApiKey) {
+      return new Response(
+        JSON.stringify({ code: 500, message: 'Missing required environment variables' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return new Response(
+        JSON.stringify({ code: 401, message: 'Missing or invalid Authorization header' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const token = authHeader.replace('Bearer ', '').trim();
+
+    // Normal client: JWT doğrulama için
+    const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey, {
+      global: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    });
+
+    const {
+      data: { user },
+      error: userError,
+    } = await supabaseAuth.auth.getUser(token);
+
+    if (userError || !user) {
+      console.error('❌ JWT validation failed:', userError);
+      return new Response(
+        JSON.stringify({ code: 401, message: 'Invalid authentication token' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const userId = user.id;
+    console.log('✅ Authenticated user:', user.email, userId);
+
+    // Service role client: DB işlemleri için
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Parse request body
-    const { simulation_text, user_id } = await req.json();
+    const { simulation_text } = await req.json();
 
-    if (!simulation_text || !user_id) {
-      console.error('❌ Missing required fields');
+    if (!simulation_text) {
+      console.error('❌ Missing simulation_text');
       return new Response(
-        JSON.stringify({ code: 400, message: 'Missing simulation_text or user_id' }),
+        JSON.stringify({ code: 400, message: 'Missing simulation_text' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    console.log('📊 Fetching/creating user profile for:', user_id);
+    console.log('📊 Fetching/creating user profile for:', userId);
 
-    // Try to fetch user profile
     let { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('free_runs_left, membership_type')
-      .eq('id', user_id)
+      .eq('id', userId)
       .single();
 
-    // If profile doesn't exist, create it
     if (profileError && profileError.code === 'PGRST116') {
       console.log('🆕 Profile not found, creating new profile...');
-      
+
       const { data: newProfile, error: createError } = await supabase
         .from('profiles')
         .insert({
-          id: user_id,
+          id: userId,
           free_runs_left: 3,
-          membership_type: 'Free'
+          membership_type: 'Free',
         })
         .select('free_runs_left, membership_type')
         .single();
@@ -81,7 +121,6 @@ Deno.serve(async (req) => {
 
     console.log('✅ User profile:', profile);
 
-    // Check free runs
     if (profile.membership_type === 'Free' && profile.free_runs_left <= 0) {
       console.log('❌ No free runs left');
       return new Response(
@@ -92,11 +131,10 @@ Deno.serve(async (req) => {
 
     console.log('🤖 Generating simulation with OpenAI...');
 
-    // OpenAI API call
     const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openaiApiKey}`,
+        Authorization: `Bearer ${openaiApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -141,12 +179,12 @@ Return ONLY valid JSON in this exact format:
     "signature": "Your alternate self"
   },
   "insight": "profound reflection here"
-}`
+}`,
           },
           {
             role: 'user',
-            content: simulation_text
-          }
+            content: simulation_text,
+          },
         ],
         temperature: 0.8,
         max_tokens: 1500,
@@ -167,7 +205,6 @@ Return ONLY valid JSON in this exact format:
 
     console.log('✅ OpenAI response received');
 
-    // Parse JSON
     let simulationResult;
     try {
       simulationResult = JSON.parse(aiContent);
@@ -181,17 +218,14 @@ Return ONLY valid JSON in this exact format:
 
     console.log('💾 Saving simulation to database...');
 
-    // Save simulation
-    const { error: insertError } = await supabase
-      .from('simulations')
-      .insert({
-        user_id,
-        simulation_text,
-        narrative: simulationResult.narrative,
-        butterfly_scores: simulationResult.butterfly_scores,
-        ghost_message: simulationResult.ghost_message,
-        insight: simulationResult.insight,
-      });
+    const { error: insertError } = await supabase.from('simulations').insert({
+      user_id: userId,
+      simulation_text,
+      narrative: simulationResult.narrative,
+      butterfly_scores: simulationResult.butterfly_scores,
+      ghost_message: simulationResult.ghost_message,
+      insight: simulationResult.insight,
+    });
 
     if (insertError) {
       console.error('❌ Database insert error:', insertError);
@@ -201,12 +235,12 @@ Return ONLY valid JSON in this exact format:
       );
     }
 
-    // ✅ Only deduct credit AFTER successful save
     if (profile.membership_type === 'Free') {
       const { error: updateError } = await supabase
         .from('profiles')
         .update({ free_runs_left: profile.free_runs_left - 1 })
-        .eq('id', user_id);
+        .eq('id', userId);
+
       if (updateError) {
         console.error('❌ Credit deduction error:', updateError);
       }
@@ -214,7 +248,6 @@ Return ONLY valid JSON in this exact format:
 
     console.log('🎉 Simulation completed successfully!');
 
-    // Success response
     return new Response(
       JSON.stringify({
         success: true,
@@ -226,7 +259,6 @@ Return ONLY valid JSON in this exact format:
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('❌ Unexpected error:', error);
     return new Response(

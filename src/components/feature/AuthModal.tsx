@@ -110,7 +110,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
       ></div>
 
       {/* Modal */}
-      <div className="relative w-full max-w-md backdrop-blur-xl bg-white/10 rounded-3xl p-8 border border-white/20 shadow-2xl">
+      <div className="relative w-full max-w-md backdrop-blur-xl bg-white/10 rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl">
         {/* Close Button */}
         <button
           onClick={onClose}

@@ -103,9 +103,9 @@ export default function Plans({ onUpgradeClick }: PlansProps) {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative backdrop-blur-xl rounded-3xl p-8 border transition-all duration-300 ${
+              className={`relative backdrop-blur-xl rounded-3xl p-6 sm:p-8 border transition-all duration-300 ${
                 plan.highlighted
-                  ? 'bg-white/10 border-violet-400/50 shadow-2xl shadow-violet-500/20 scale-105'
+                  ? 'bg-white/10 border-violet-400/50 shadow-2xl shadow-violet-500/20 md:scale-105'
                   : 'bg-white/5 border-white/10 hover:bg-white/8'
               }`}
             >

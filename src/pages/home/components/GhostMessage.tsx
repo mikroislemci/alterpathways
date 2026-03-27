@@ -50,17 +50,17 @@ export default function GhostMessage({ message, onSimulateAgain }: GhostMessageP
   };
 
   return (
-    <section className="py-24 px-6">
+    <section className="py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-white mb-4">
             A message from your <span className="text-violet-300">alternate self</span>
           </h2>
           <p className="text-gray-400 text-sm">Personal. Emotional. Shareable.</p>
         </div>
 
         {/* Ghost Message Card */}
-        <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl p-10 md:p-12 border border-white/10 shadow-2xl">
+        <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl p-6 sm:p-10 md:p-12 border border-white/10 shadow-2xl">
           {/* Decorative Quote Icon */}
           <div className="absolute top-6 left-6 w-12 h-12 flex items-center justify-center">
             <i className="ri-double-quotes-l text-4xl text-violet-300/20"></i>
@@ -88,10 +88,10 @@ export default function GhostMessage({ message, onSimulateAgain }: GhostMessageP
         </div>
 
         {/* Share + Simulate Again Buttons */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
           <button
             onClick={handleShare}
-            className="inline-flex items-center space-x-2 backdrop-blur-lg bg-white/10 hover:bg-white/15 text-white px-8 py-3 rounded-full border border-white/20 transition-all duration-300 cursor-pointer whitespace-nowrap"
+            className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 backdrop-blur-lg bg-white/10 hover:bg-white/15 text-white px-6 sm:px-8 py-3 rounded-full border border-white/20 transition-all duration-300 cursor-pointer whitespace-nowrap"
           >
             <i className={`${isSharing ? 'ri-check-line' : 'ri-share-line'} text-lg`}></i>
             <span className="text-sm font-medium">
@@ -102,7 +102,7 @@ export default function GhostMessage({ message, onSimulateAgain }: GhostMessageP
           {onSimulateAgain && (
             <button
               onClick={onSimulateAgain}
-              className="inline-flex items-center space-x-2 backdrop-blur-lg bg-violet-500/15 hover:bg-violet-500/25 text-violet-200 hover:text-white px-8 py-3 rounded-full border border-violet-400/30 hover:border-violet-400/60 transition-all duration-300 cursor-pointer whitespace-nowrap"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 backdrop-blur-lg bg-violet-500/15 hover:bg-violet-500/25 text-violet-200 hover:text-white px-6 sm:px-8 py-3 rounded-full border border-violet-400/30 hover:border-violet-400/60 transition-all duration-300 cursor-pointer whitespace-nowrap"
             >
               <div className="w-4 h-4 flex items-center justify-center">
                 <i className="ri-loop-left-line text-lg"></i>

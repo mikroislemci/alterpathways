@@ -41,12 +41,12 @@ export default function UserMenu({ user, freeRuns, membershipType = 'Free', onSi
       {/* User Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="backdrop-blur-lg bg-white/10 rounded-full px-6 py-2 border border-white/20 hover:bg-white/15 transition-all cursor-pointer flex items-center space-x-3"
+        className="backdrop-blur-lg bg-white/10 rounded-full px-3 sm:px-6 py-2 border border-white/20 hover:bg-white/15 transition-all cursor-pointer flex items-center space-x-2 sm:space-x-3"
       >
-        <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-violet-400 to-purple-600">
-          <i className="ri-user-line text-white text-lg"></i>
+        <div className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-violet-400 to-purple-600 flex-shrink-0">
+          <i className="ri-user-line text-white text-base sm:text-lg"></i>
         </div>
-        <div className="text-left">
+        <div className="text-left hidden sm:block">
           <div className="text-white text-sm font-medium whitespace-nowrap">
             {user.email?.split('@')[0] || 'User'}
           </div>
@@ -65,7 +65,7 @@ export default function UserMenu({ user, freeRuns, membershipType = 'Free', onSi
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-3 w-72 backdrop-blur-lg bg-white/10 rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
+        <div className="absolute right-0 mt-3 w-64 sm:w-72 backdrop-blur-lg bg-white/10 rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
           <div className="p-6 border-b border-white/10">
             <p className="text-white font-medium mb-1">{user.email}</p>
             <div className="flex items-center space-x-2 text-sm">

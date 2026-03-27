@@ -14,7 +14,7 @@ export default function Hero({ simulation, setSimulation, onSimulate, isLoading 
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6 py-20 z-10">
+    <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-20 z-10">
       {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl"></div>
@@ -23,14 +23,14 @@ export default function Hero({ simulation, setSimulation, onSimulate, isLoading 
 
       <div className="relative max-w-4xl mx-auto text-center z-20">
         {/* Logo/Icon */}
-        <div className="mb-8 inline-block">
-          <div className="w-20 h-20 flex items-center justify-center backdrop-blur-lg bg-white/5 rounded-full border border-white/10">
-            <i className="ri-git-branch-line text-4xl text-violet-300"></i>
+        <div className="mb-6 sm:mb-8 inline-block">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center backdrop-blur-lg bg-white/5 rounded-full border border-white/10">
+            <i className="ri-git-branch-line text-3xl sm:text-4xl text-violet-300"></i>
           </div>
         </div>
 
         {/* Main Heading */}
-        <h1 className="text-5xl md:text-7xl font-light text-white mb-6 leading-tight">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-light text-white mb-4 sm:mb-6 leading-tight">
           What if you had chosen
           <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 via-purple-300 to-pink-300">
@@ -39,17 +39,17 @@ export default function Hero({ simulation, setSimulation, onSimulate, isLoading 
         </h1>
 
         {/* Subheading */}
-        <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-base sm:text-lg md:text-xl text-gray-400 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-2">
           Simulate the life you didn't live. See how one decision could have changed everything.
         </p>
 
         {/* Search Bar */}
         <div className="relative max-w-3xl mx-auto z-20">
           <form onSubmit={handleSubmit}>
-            <div className="relative backdrop-blur-xl bg-white/5 rounded-full border border-white/10 p-2 hover:border-violet-400/30 transition-all duration-300 z-20">
-              <div className="flex items-center space-x-3">
-                {/* Icon */}
-                <div className="pl-4 flex items-center justify-center">
+            <div className="relative backdrop-blur-xl bg-white/5 rounded-2xl sm:rounded-full border border-white/10 p-2 hover:border-violet-400/30 transition-all duration-300 z-20">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
+                {/* Icon - hidden on mobile */}
+                <div className="hidden sm:flex pl-4 items-center justify-center">
                   <i className="ri-search-line text-xl text-gray-400"></i>
                 </div>
 
@@ -58,8 +58,8 @@ export default function Hero({ simulation, setSimulation, onSimulate, isLoading 
                   type="text"
                   value={simulation}
                   onChange={(e) => setSimulation(e.target.value)}
-                  placeholder="What if I had taken that job offer in another city..."
-                  className="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-base py-3 pr-4"
+                  placeholder="What if I had taken that job offer..."
+                  className="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-sm sm:text-base py-3 px-4 sm:px-0 sm:pr-4"
                   disabled={isLoading}
                 />
 
@@ -68,7 +68,7 @@ export default function Hero({ simulation, setSimulation, onSimulate, isLoading 
                   type="submit"
                   disabled={isLoading}
                   onClick={handleSubmit}
-                  className="backdrop-blur-lg bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 whitespace-nowrap z-30 cursor-pointer"
+                  className="backdrop-blur-lg bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white px-6 sm:px-8 py-3 rounded-xl sm:rounded-full font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 whitespace-nowrap z-30 cursor-pointer"
                   style={{ pointerEvents: 'auto' }}
                 >
                   {isLoading ? (
@@ -89,7 +89,7 @@ export default function Hero({ simulation, setSimulation, onSimulate, isLoading 
         </div>
 
         {/* Example Prompts */}
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <div className="mt-6 sm:mt-8 flex flex-wrap justify-center gap-2 sm:gap-3 px-2">
           {[
             'What if I had studied abroad?',
             'What if I had started that business?',
@@ -98,7 +98,7 @@ export default function Hero({ simulation, setSimulation, onSimulate, isLoading 
             <button
               key={index}
               onClick={() => setSimulation(prompt)}
-              className="backdrop-blur-lg bg-white/5 hover:bg-white/10 text-gray-300 text-sm px-4 py-2 rounded-full border border-white/10 hover:border-violet-400/30 transition-all duration-300 cursor-pointer"
+              className="backdrop-blur-lg bg-white/5 hover:bg-white/10 text-gray-300 text-xs sm:text-sm px-3 sm:px-4 py-2 rounded-full border border-white/10 hover:border-violet-400/30 transition-all duration-300 cursor-pointer"
             >
               {prompt}
             </button>
@@ -106,7 +106,7 @@ export default function Hero({ simulation, setSimulation, onSimulate, isLoading 
         </div>
 
         {/* Scroll Indicator */}
-        <div className="mt-20 animate-bounce">
+        <div className="mt-14 sm:mt-20 animate-bounce">
           <i className="ri-arrow-down-line text-2xl text-gray-500"></i>
         </div>
       </div>

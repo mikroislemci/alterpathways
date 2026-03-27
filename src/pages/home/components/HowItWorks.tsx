@@ -18,13 +18,13 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="py-24 px-6">
+    <section className="py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-light text-white text-center mb-16">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-white text-center mb-10 sm:mb-16">
           How it <span className="text-violet-300">Works</span>
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-8">
           {steps.map((step, index) => (
             <div key={index} className="text-center">
               {/* Icon Container */}

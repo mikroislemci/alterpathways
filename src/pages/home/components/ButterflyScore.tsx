@@ -117,19 +117,19 @@ export default function ButterflyScore({ scores, insight, onSimulateAgain }: But
   };
 
   return (
-    <section id="butterfly-score" className="py-24 px-6">
+    <section id="butterfly-score" className="py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-white mb-4">
             Butterfly <span className="text-violet-300">Effect Score</span>
           </h2>
           <p className="text-gray-400 text-sm">How one decision ripples through your entire life</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
           {/* Radar Chart Visual */}
-          <div className="backdrop-blur-xl bg-white/5 rounded-3xl p-10 border border-white/10">
-            <div className="relative w-full aspect-square max-w-md mx-auto">
+          <div className="backdrop-blur-xl bg-white/5 rounded-3xl p-6 sm:p-10 border border-white/10">
+            <div className="relative w-full aspect-square max-w-xs sm:max-w-md mx-auto">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-32 h-32 rounded-full bg-gradient-to-br from-violet-500/20 to-purple-600/20 border border-violet-400/30 flex items-center justify-center backdrop-blur-sm">
                   <div className="text-center">

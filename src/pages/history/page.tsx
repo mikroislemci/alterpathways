@@ -160,11 +160,8 @@ export default function History() {
 
   if (isCheckingAuth) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#1A1A2E] via-[#16213E] to-[#0F1419] flex items-center justify-center">
-        <div className="flex flex-col items-center space-y-4">
-          <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
-          <p className="text-white text-lg">Loading your history...</p>
-        </div>
+      <div className="min-h-screen bg-gradient-to-b from-[#0F0F1E] via-[#1A1A2E] to-[#16213E] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-violet-400/30 border-t-violet-300 rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -191,7 +188,8 @@ export default function History() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1A1A2E] via-[#16213E] to-[#0F1419]">
-      <div className="fixed top-8 right-8 z-40">
+      {/* User Menu */}
+      <div className="fixed top-4 right-4 sm:top-8 sm:right-8 z-40">
         <UserMenu
           user={user}
           freeRuns={freeRuns}
@@ -200,10 +198,10 @@ export default function History() {
         />
       </div>
 
-      <div className="container mx-auto px-6 pt-24 pb-8">
+      <div className="container mx-auto px-4 sm:px-6 pt-20 sm:pt-24 pb-8">
         <Link
           to="/"
-          className="inline-flex items-center space-x-2 text-violet-300 hover:text-violet-200 transition-colors cursor-pointer mb-8 whitespace-nowrap"
+          className="inline-flex items-center space-x-2 text-violet-300 hover:text-violet-200 transition-colors cursor-pointer mb-6 sm:mb-8 whitespace-nowrap"
         >
           <div className="w-5 h-5 flex items-center justify-center">
             <i className="ri-arrow-left-line text-lg"></i>
@@ -211,23 +209,23 @@ export default function History() {
           <span>Back to Home</span>
         </Link>
 
-        <h1 className="text-5xl font-bold text-white mb-4">My Simulation History</h1>
-        <p className="text-gray-400 text-lg">Explore the paths you&apos;ve considered and the insights you&apos;ve gained</p>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-4">My Simulation History</h1>
+        <p className="text-gray-400 text-sm sm:text-lg">Explore the paths you&apos;ve considered and the insights you&apos;ve gained</p>
 
         {simulations.length > 0 && (
-          <div className="mt-8 grid grid-cols-3 gap-4 max-w-xl">
-            <div className="backdrop-blur-lg bg-white/5 rounded-xl px-5 py-4 border border-white/10 text-center">
-              <div className="text-2xl font-bold text-white">{simulations.length}</div>
+          <div className="mt-6 sm:mt-8 grid grid-cols-3 gap-3 sm:gap-4 max-w-xl">
+            <div className="backdrop-blur-lg bg-white/5 rounded-xl px-3 sm:px-5 py-3 sm:py-4 border border-white/10 text-center">
+              <div className="text-xl sm:text-2xl font-bold text-white">{simulations.length}</div>
               <div className="text-xs text-gray-400 mt-1">Simulations</div>
             </div>
-            <div className="backdrop-blur-lg bg-white/5 rounded-xl px-5 py-4 border border-white/10 text-center">
-              <div className="text-2xl font-bold text-violet-300">
+            <div className="backdrop-blur-lg bg-white/5 rounded-xl px-3 sm:px-5 py-3 sm:py-4 border border-white/10 text-center">
+              <div className="text-xl sm:text-2xl font-bold text-violet-300">
                 {simulations.filter(s => s.butterfly_scores).length}
               </div>
               <div className="text-xs text-gray-400 mt-1">With Scores</div>
             </div>
-            <div className="backdrop-blur-lg bg-white/5 rounded-xl px-5 py-4 border border-white/10 text-center">
-              <div className="text-2xl font-bold text-emerald-300 text-sm">
+            <div className="backdrop-blur-lg bg-white/5 rounded-xl px-3 sm:px-5 py-3 sm:py-4 border border-white/10 text-center">
+              <div className="text-sm sm:text-base font-bold text-emerald-300">
                 {formatDate(simulations[0].created_at).split(',')[0]}
               </div>
               <div className="text-xs text-gray-400 mt-1">Last Run</div>
@@ -236,7 +234,7 @@ export default function History() {
         )}
       </div>
 
-      <div className="container mx-auto px-6 pb-24">
+      <div className="container mx-auto px-4 sm:px-6 pb-16 sm:pb-24">
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -256,14 +254,14 @@ export default function History() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-white mb-6">All Simulations ({simulations.length})</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+            <div className="space-y-3 sm:space-y-4">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">All Simulations ({simulations.length})</h2>
               {simulations.map((sim, idx) => (
                 <div
                   key={sim.id}
                   onClick={() => setSelectedSimulation(sim)}
-                  className={`backdrop-blur-lg bg-white/5 rounded-2xl p-6 border transition-all cursor-pointer hover:bg-white/10 ${
+                  className={`backdrop-blur-lg bg-white/5 rounded-2xl p-4 sm:p-6 border transition-all cursor-pointer hover:bg-white/10 ${
                     selectedSimulation?.id === sim.id
                       ? 'border-violet-400/50 bg-white/10'
                       : 'border-white/10'
@@ -314,7 +312,7 @@ export default function History() {
 
             <div className="lg:sticky lg:top-8 lg:self-start">
               {selectedSimulation ? (
-                <div className="backdrop-blur-lg bg-white/5 rounded-2xl p-8 border border-white/10">
+                <div className="backdrop-blur-lg bg-white/5 rounded-2xl p-5 sm:p-8 border border-white/10">
                   <div className="mb-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center space-x-2 text-sm text-gray-400">
@@ -397,7 +395,7 @@ export default function History() {
                   </div>
                 </div>
               ) : (
-                <div className="backdrop-blur-lg bg-white/5 rounded-2xl p-12 border border-white/10 text-center">
+                <div className="hidden lg:block backdrop-blur-lg bg-white/5 rounded-2xl p-12 border border-white/10 text-center">
                   <div className="w-20 h-20 flex items-center justify-center mx-auto mb-6 bg-white/5 rounded-full">
                     <i className="ri-file-text-line text-4xl text-white/30"></i>
                   </div>

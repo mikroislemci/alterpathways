@@ -93,11 +93,11 @@ export default function ExportSection({ hasResults, simulationText, onShareCard 
   };
 
   return (
-    <section className="py-12 px-6 export-ignore">
+    <section className="py-10 sm:py-12 px-4 sm:px-6 export-ignore">
       <div className="max-w-3xl mx-auto">
-        <div className="backdrop-blur-xl bg-white/5 rounded-3xl px-10 py-10 border border-white/10">
+        <div className="backdrop-blur-xl bg-white/5 rounded-3xl px-6 py-6 sm:px-10 sm:py-10 border border-white/10">
           {/* Header */}
-          <div className="flex items-start gap-5 mb-8">
+          <div className="flex items-start gap-4 sm:gap-5 mb-6 sm:mb-8">
             <div className="w-12 h-12 flex items-center justify-center shrink-0 rounded-xl bg-violet-500/15 border border-violet-500/20">
               <i className="ri-download-2-line text-violet-300 text-2xl"></i>
             </div>
@@ -110,7 +110,7 @@ export default function ExportSection({ hasResults, simulationText, onShareCard 
           </div>
 
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             {buttonContent('png', pngState, 'ri-image-line', 'Save as PNG Image', 'High-res · 2× quality')}
             {buttonContent('pdf', pdfState, 'ri-file-pdf-line', 'Export as PDF', 'Print-ready · A4 compatible')}
 
