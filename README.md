@@ -1,14 +1,26 @@
 # AlterPathways
 
-AlterPathways is a web application that lets users explore alternative life scenarios and generate AI-powered reflections based on different possible paths.
+AlterPathways is an AI-powered web experience that lets users explore the life they might have lived if they had chosen differently.
 
-## Features
+## Live Website
 
-- Alternative life path simulation
-- AI-generated scenario outputs
-- Modern frontend built with Vite + React + TypeScript
-- Supabase functions integration
-- Responsive interface
+[Visit AlterPathways](https://alterpathways.com)
+
+## What It Does
+
+Users describe a missed decision, a path not taken, or a major turning point. AlterPathways then generates:
+
+- an alternate life simulation
+- a Butterfly Effect Score
+- a reflective message from an alternate self
+
+## Core Features
+
+- Alternate life simulation
+- Butterfly Effect Score
+- Reflective ghost message
+- Account-based usage system
+- Free and paid plan structure
 
 ## Tech Stack
 
@@ -17,18 +29,13 @@ AlterPathways is a web application that lets users explore alternative life scen
 - Vite
 - Tailwind CSS
 - Supabase
+- OpenAI API
 
 ## Project Structure
 
-- `src/` → frontend application files
-- `supabase/functions/` → backend edge/serverless functions
-- `index.html` → app entry HTML
-- `vite.config.ts` → Vite configuration
-
-## Getting Started
-
-Clone the repository:
-
 ```bash
-git clone https://github.com/mikroislemci/alterpathways.git
-cd alterpathways
+src/                   # Frontend application
+supabase/functions/    # Edge functions
+index.html             # App entry point
+package.json           # Dependencies and scripts
+vite.config.ts         # Vite configuration
