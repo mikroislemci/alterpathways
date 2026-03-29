@@ -114,8 +114,8 @@ export default function Home() {
         setFreeRuns(data.free_runs_left ?? 0);
         setMembershipType(data.membership_type || 'Free');
       } else {
-        console.log('⚠️ No profile data, showing default 3 runs');
-        setFreeRuns(3);
+        console.log('⚠️ No profile data, showing default 1 run');
+        setFreeRuns(1);
         setMembershipType('Free');
       }
     } catch (error) {
@@ -495,6 +495,10 @@ export default function Home() {
         setSimulation={setSimulation}
         onSimulate={handleSimulate}
         isLoading={isLoading}
+        freeRuns={freeRuns}
+        membershipType={membershipType}
+        onUpgradeClick={() => setIsPricingModalOpen(true)}
+        isLoggedIn={!!user}
       />
       <HowItWorks />
 

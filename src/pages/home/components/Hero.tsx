@@ -3,9 +3,25 @@ interface HeroProps {
   setSimulation: (value: string) => void;
   onSimulate: () => void;
   isLoading: boolean;
+  freeRuns: number;
+  membershipType: string;
+  onUpgradeClick: () => void;
+  isLoggedIn: boolean;
 }
 
-export default function Hero({ simulation, setSimulation, onSimulate, isLoading }: HeroProps) {
+export default function Hero({
+  simulation,
+  setSimulation,
+  onSimulate,
+  isLoading,
+  freeRuns,
+  membershipType,
+  onUpgradeClick,
+  isLoggedIn,
+}: HeroProps) {
+  const isPremium = membershipType?.toLowerCase() === 'premium';
+  const isExhausted = isLoggedIn && !isPremium && freeRuns <= 0;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -46,7 +62,13 @@ export default function Hero({ simulation, setSimulation, onSimulate, isLoading 
         {/* Search Bar */}
         <div className="relative max-w-3xl mx-auto z-20">
           <form onSubmit={handleSubmit}>
-            <div className="relative backdrop-blur-xl bg-white/5 rounded-2xl sm:rounded-full border border-white/10 p-2 hover:border-violet-400/30 transition-all duration-300 z-20">
+            <div
+              className={`relative backdrop-blur-xl rounded-2xl sm:rounded-full border p-2 transition-all duration-300 z-20 ${
+                isExhausted
+                  ? 'bg-white/3 border-white/5 opacity-50 pointer-events-none'
+                  : 'bg-white/5 border-white/10 hover:border-violet-400/30'
+              }`}
+            >
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
                 {/* Icon - hidden on mobile */}
                 <div className="hidden sm:flex pl-4 items-center justify-center">
@@ -60,16 +82,16 @@ export default function Hero({ simulation, setSimulation, onSimulate, isLoading 
                   onChange={(e) => setSimulation(e.target.value)}
                   placeholder="What if I had taken that job offer..."
                   className="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-sm sm:text-base py-3 px-4 sm:px-0 sm:pr-4"
-                  disabled={isLoading}
+                  disabled={isLoading || isExhausted}
                 />
 
                 {/* Simulate Button */}
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || isExhausted}
                   onClick={handleSubmit}
                   className="backdrop-blur-lg bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white px-6 sm:px-8 py-3 rounded-xl sm:rounded-full font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 whitespace-nowrap z-30 cursor-pointer"
-                  style={{ pointerEvents: 'auto' }}
+                  style={{ pointerEvents: isExhausted ? 'none' : 'auto' }}
                 >
                   {isLoading ? (
                     <>
@@ -86,10 +108,35 @@ export default function Hero({ simulation, setSimulation, onSimulate, isLoading 
               </div>
             </div>
           </form>
+
+          {/* Runs Exhausted Banner */}
+          {isExhausted && (
+            <div className="mt-4 backdrop-blur-xl bg-gradient-to-r from-violet-900/40 to-purple-900/40 border border-violet-500/30 rounded-2xl px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 flex items-center justify-center rounded-full bg-violet-500/20 border border-violet-400/30 flex-shrink-0">
+                  <i className="ri-time-line text-violet-300 text-lg"></i>
+                </div>
+                <div className="text-left">
+                  <p className="text-white text-sm font-medium leading-tight">
+                    Your free simulation has been used
+                  </p>
+                  <p className="text-gray-400 text-xs mt-0.5">
+                    Unlock more paths — get 3 simulations for just $5.99
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={onUpgradeClick}
+                className="flex-shrink-0 bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all duration-300 cursor-pointer whitespace-nowrap"
+              >
+                Upgrade Now
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Example Prompts */}
-        <div className="mt-6 sm:mt-8 flex flex-wrap justify-center gap-2 sm:gap-3 px-2">
+        <div className={`mt-6 sm:mt-8 flex flex-wrap justify-center gap-2 sm:gap-3 px-2 transition-opacity duration-300 ${isExhausted ? 'opacity-30 pointer-events-none' : ''}`}>
           {[
             'What if I had studied abroad?',
             'What if I had started that business?',
@@ -103,6 +150,19 @@ export default function Hero({ simulation, setSimulation, onSimulate, isLoading 
               {prompt}
             </button>
           ))}
+        </div>
+
+        {/* Detailed Example Hint */}
+        <div className={`mt-5 sm:mt-6 max-w-2xl mx-auto px-2 transition-opacity duration-300 ${isExhausted ? 'opacity-30 pointer-events-none' : ''}`}>
+          <p className="text-xs text-gray-600 leading-relaxed">
+            <span className="text-gray-500 font-medium">Example:</span>{' '}
+            <button
+              onClick={() => setSimulation("What if I had moved to Canada in 2020 instead of staying in Turkey? Compare my career, stress, and relationships.")}
+              className="text-gray-500 italic hover:text-violet-400 transition-colors duration-200 cursor-pointer text-left"
+            >
+              &ldquo;What if I had moved to Canada in 2020 instead of staying in Turkey? Compare my career, stress, and relationships.&rdquo;
+            </button>
+          </p>
         </div>
 
         {/* Scroll Indicator */}

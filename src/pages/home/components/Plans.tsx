@@ -23,7 +23,7 @@ export default function Plans({ onUpgradeClick }: PlansProps) {
       price: '$0',
       period: 'one time',
       features: [
-        '3 free simulations',
+        '1 simulation',
         'Basic butterfly score',
         'Ghost message preview',
         '24-hour access'
@@ -33,17 +33,16 @@ export default function Plans({ onUpgradeClick }: PlansProps) {
       checkoutUrl: null
     },
     {
-      name: '10 Simulation Pack',
-      price: '$9.99',
+      name: 'Starter Pack',
+      price: '$5.99',
       period: 'one-time',
       features: [
-        '10 complete simulations',
+        '3 simulations',
         'Full butterfly scores',
         'Ghost messages',
-        'Shareable results',
-        'PDF export'
+        'Shareable results'
       ],
-      cta: 'Get 10 Simulations',
+      cta: 'Get 3 Simulations',
       highlighted: true,
       checkoutUrl: 'https://alterpathways.lemonsqueezy.com/checkout/buy/5d5094b6-8f71-410a-a4bb-5d180421e3bb'
     },

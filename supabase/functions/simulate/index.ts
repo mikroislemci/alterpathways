@@ -42,7 +42,7 @@ Deno.serve(async (req) => {
 
     const token = authHeader.replace('Bearer ', '').trim();
 
-    // Normal client: JWT doğrulama için
+    // Normal client: JWT dogrulama icin
     const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey, {
       global: {
         headers: {
@@ -67,7 +67,7 @@ Deno.serve(async (req) => {
     const userId = user.id;
     console.log('✅ Authenticated user:', user.email, userId);
 
-    // Service role client: DB işlemleri için
+    // Service role client: DB islemleri icin
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     const { simulation_text } = await req.json();
@@ -95,7 +95,7 @@ Deno.serve(async (req) => {
         .from('profiles')
         .insert({
           id: userId,
-          free_runs_left: 3,
+          free_runs_left: 1,
           membership_type: 'Free',
         })
         .select('free_runs_left, membership_type')

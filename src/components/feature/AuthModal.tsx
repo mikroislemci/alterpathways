@@ -29,12 +29,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
             .single();
 
           if (profileError && profileError.code === 'PGRST116') {
-            console.log('📝 AuthModal - Creating new profile with 3 free runs...');
-            // Profile doesn't exist, create it with 3 free runs
+            console.log('📝 AuthModal - Creating new profile with 1 free run...');
+            // Profile doesn't exist, create it with 1 free run
             const { error: insertError } = await supabase.from('profiles').insert({
               id: session.user.id,
               email: session.user.email,
-              free_runs_left: 3,
+              free_runs_left: 1,
               membership_type: 'Free',
               created_at: new Date().toISOString()
             });
@@ -42,7 +42,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
             if (insertError) {
               console.error('❌ Error creating profile:', insertError);
             } else {
-              console.log('✅ AuthModal - Profile created successfully with 3 free runs');
+              console.log('✅ AuthModal - Profile created successfully with 1 free run');
             }
           } else {
             console.log('ℹ️ AuthModal - Profile exists:', profile);
@@ -183,7 +183,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
         <div className="mt-6 p-4 bg-violet-500/10 border border-violet-500/20 rounded-2xl">
           <p className="text-xs text-violet-200 text-center">
             <i className="ri-gift-line mr-1"></i>
-            Get 3 free simulations when you sign up
+            Get 1 free simulation when you sign up
           </p>
         </div>
 

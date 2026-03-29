@@ -28,19 +28,19 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
   const plans = [
     {
-      name: '10 Simulation Pack',
-      price: '$9.99',
+      name: 'Starter Pack',
+      price: '$5.99',
       period: 'one-time',
       features: [
-        '10 complete simulations',
+        '3 simulations',
         'Full butterfly scores',
         'Ghost messages',
-        'Shareable results',
-        'PDF export'
+        'Shareable results'
       ],
       checkoutUrl: 'https://alterpathways.lemonsqueezy.com/checkout/buy/5d5094b6-8f71-410a-a4bb-5d180421e3bb',
       badge: null,
-      highlighted: false
+      highlighted: false,
+      cta: 'Get 3 Simulations'
     },
     {
       name: 'Monthly Unlimited',
@@ -55,7 +55,8 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
       ],
       checkoutUrl: 'https://alterpathways.lemonsqueezy.com/checkout/buy/b5736c93-65b9-4fac-a43f-cf3fbe7bae35',
       badge: 'Most Popular',
-      highlighted: true
+      highlighted: true,
+      cta: 'Go Unlimited'
     },
     {
       name: 'Annual Unlimited',
@@ -70,7 +71,8 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
       ],
       checkoutUrl: 'https://alterpathways.lemonsqueezy.com/checkout/buy/b47ae62a-3c75-4a32-92c0-1ea6ca4c35bd',
       badge: 'Best Value',
-      highlighted: false
+      highlighted: false,
+      cta: 'Get Annual Plan'
     }
   ];
 
@@ -168,7 +170,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                     : 'bg-white/10 hover:bg-white/15 text-white border border-white/20'
                 }`}
               >
-                Get Started
+                {plan.cta}
               </button>
             </div>
           ))}
